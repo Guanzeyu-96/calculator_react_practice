@@ -1,25 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Wrapper } from "./component/wrapper/Wrapper";
+import "./App.css";
+import { Screen } from "./component/Screen";
+import { ButtonArea } from "./component/wrapper/ButtonArea";
+import { btnValues } from "./constant/btnValues";
+import { Button } from "./component/Button";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper>
+      <Screen />
+      <ButtonArea>
+        {btnValues.flat().map((btn, index) => {
+          return <Button value={btn} key={btn} />;
+        })}
+      </ButtonArea>
+    </Wrapper>
   );
 }
 
