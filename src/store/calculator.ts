@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {evaluate} from "mathjs";
+import { Decimal } from "decimal.js";
 
 interface CalculatorState {
   input: string; // 实时输入区
-  stage: number | null; // 暂存区
+  stage: string | null; // 暂存区
   rule: string | null; // 计算法则存储区
   result: string | null; // 计算结果保存区
   isResult: boolean; // 是否为input阶段,仅用来控制显示（input阶段显示input，非input阶段显示result）
@@ -53,9 +53,11 @@ export const calculatorSlice = createSlice({
     },
     percentClickHandler(state) {
       if (!state.isResult) {
-        state.input = (+state.input / 100).toString();
+        const value = new Decimal(state.input);
+        state.input = value.div(100).toString();
       } else {
-        state.result = (+state.result! / 100).toString();
+        const value = new Decimal(state.result!);
+        state.result = value.div(100).toString();
       }
     },
 
@@ -68,28 +70,29 @@ export const calculatorSlice = createSlice({
       }
 
       // 点击运算符发生的事情：把input区的结果放入stage、初始化input区、把运算符的value记录到rule区，数字输入状态变为初始化
-      state.stage = +state.input!;
+      state.stage = state.input!;
       state.rule = action.payload as string;
       state.isNumInit = true;
     },
     equalClickHandler(state) {
       // 点击=发生的事：根据input区，stage区和rule区的数据计算出结果并放入result区，数字输入状态变为初始化
+      // 数值计算前使用Decimal处理
+      const value = new Decimal(state.stage!);
+      const targetValue = new Decimal(state.input);
       switch (state.rule) {
         case "+":
-          // state.result = evaluate(state.stage!, +state.input).toString();
-          // state.result = (state.stage! + +state.input).toString();
+          state.result = value.add(targetValue).toString();
           break;
         case "-":
-          state.result = (state.stage! - +state.input).toString();
+          state.result = value.minus(targetValue).toString();
           break;
         case "x":
-          state.result = (state.stage! * +state.input).toString();
+          state.result = value.times(targetValue).toString();
           break;
         case "/":
           // 被除数为0的情况下抛出异常
           if (+state.input === 0) throw new Error("Dividend can't be 0!");
-
-          state.result = (state.stage! / +state.input).toString();
+          state.result = value.div(targetValue).toString();
           break;
         default:
           state.result = state.input; // default对应用户没有输入运算符点击=的情况
