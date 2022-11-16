@@ -1,6 +1,8 @@
 .screen {
     height: 4rem;
     margin-bottom: 4rem;
-    font-size: xxx-large;
+    font-size: 4rem;
     color: white;
+    text-align: right;
 }
+

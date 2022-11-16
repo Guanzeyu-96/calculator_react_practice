@@ -77,6 +77,14 @@ export const calculatorSlice = createSlice({
     equalClickHandler(state) {
       // 点击=发生的事：根据input区，stage区和rule区的数据计算出结果并放入result区，数字输入状态变为初始化
       // 数值计算前使用Decimal处理
+      // 判断用户没有输入运算符点击=的情况
+      if (!state.stage){
+        state.result = state.input;
+        state.isResult = true;
+        state.isNumInit = true;
+        return;
+      }
+
       const value = new Decimal(state.stage!);
       const targetValue = new Decimal(state.input);
       switch (state.rule) {
@@ -89,7 +97,7 @@ export const calculatorSlice = createSlice({
         case "x":
           state.result = value.times(targetValue).toString();
           break;
-        case "/":
+        case "÷":
           // 被除数为0的情况下抛出异常
           if (+state.input === 0) throw new Error("Dividend can't be 0!");
           state.result = value.div(targetValue).toString();

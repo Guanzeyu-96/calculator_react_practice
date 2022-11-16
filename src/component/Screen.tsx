@@ -9,9 +9,13 @@ export const Screen: React.FC = () => {
   const isResult = useSelector<RootState>((state) => state.calculator.isResult);
 
   let screenNumber = isResult ? (result as string) : (input as string);
-  if (screenNumber.length > 11) {
+  if (screenNumber.length > 8) {
     screenNumber = (+screenNumber).toExponential(2).toString();
   }
 
-  return <div className={classes.screen}>{screenNumber}</div>;
+  return (
+    <div className={classes.screen} data-testid="screen">
+      {screenNumber}
+    </div>
+  );
 };
