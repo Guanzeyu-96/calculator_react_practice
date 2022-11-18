@@ -9,7 +9,6 @@ export const useClick = () => {
   const isResult = useSelector<RootState>((state) => state.calculator.isResult);
 
   const onClick = (value: string | number) => {
-    // todo: 写完所有按钮的点击事件
     if (typeof value === "number") {
       // 如果输入数字时结果区有值，则自动执行初始化
       if (isResult) {
