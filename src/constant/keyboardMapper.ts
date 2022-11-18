@@ -15,6 +15,6 @@ export const keyboardMapper: any = {
   "%": "%",
   "+": "+",
   "*": "x",
-  "/": "/",
+  "/": "÷",
   Enter: "=",
 };
