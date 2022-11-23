@@ -12,6 +12,7 @@ export const keyboardMapper: any = {
   ".": ".",
   "-": "-",
   Escape: "C",
+  "_":"+-",
   "%": "%",
   "+": "+",
   "*": "x",

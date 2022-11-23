@@ -2,7 +2,7 @@ import App from "./App";
 import { render, screen } from "./test-utils/test-utils";
 import userEvent from "@testing-library/user-event";
 
-describe("Wrapper", () => {
+describe("Keyboard input test", () => {
   it("should show number to screen when keyboard is clicked", function () {
     render(<App />);
     const element = screen.getByTestId("screen");
