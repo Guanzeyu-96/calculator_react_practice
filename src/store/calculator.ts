@@ -30,15 +30,15 @@ export const calculatorSlice = createSlice({
         state.isNumInit = false;
       }
       // 先将input和输入拼接，转为number后再转回string（实现最前去掉0等操作）
-      const numInput = state.input! + action.payload.toString();
-      state.input = (+numInput).toString();
+      const numInput = state.input + action.payload.toString();
+      state.input = parseInt(numInput).toString();
     },
     pointClickHandler(state) {
       if (state.isNumInit) {
         state.input = "0";
         state.isNumInit = false;
       }
-      if (state.input!.includes(".")) {
+      if (state.input.includes(".")) {
         return;
       } else {
         state.input = state.input + ".";
@@ -46,9 +46,9 @@ export const calculatorSlice = createSlice({
     },
     negativeClickHandler(state) {
       if (!state.isResult) {
-        state.input = (-+state.input).toString();
+        state.input = (-parseInt(state.input)).toString();
       } else {
-        state.result = (-+state.result!).toString();
+        state.result = (-parseInt(state.result!)).toString();
       }
     },
     percentClickHandler(state) {
@@ -70,7 +70,7 @@ export const calculatorSlice = createSlice({
       }
 
       // 点击运算符发生的事情：把input区的结果放入stage、初始化input区、把运算符的value记录到rule区，数字输入状态变为初始化
-      state.stage = state.input!;
+      state.stage = state.input;
       state.rule = action.payload as string;
       state.isNumInit = true;
     },
@@ -78,7 +78,7 @@ export const calculatorSlice = createSlice({
       // 点击=发生的事：根据input区，stage区和rule区的数据计算出结果并放入result区，数字输入状态变为初始化
       // 数值计算前使用Decimal处理
       // 判断用户没有输入运算符点击=的情况
-      if (!state.stage){
+      if (!state.stage) {
         state.result = state.input;
         state.isResult = true;
         state.isNumInit = true;
@@ -87,6 +87,7 @@ export const calculatorSlice = createSlice({
 
       const value = new Decimal(state.stage!);
       const targetValue = new Decimal(state.input);
+
       switch (state.rule) {
         case "+":
           state.result = value.add(targetValue).toString();
@@ -105,6 +106,7 @@ export const calculatorSlice = createSlice({
         default:
           state.result = state.input; // default对应用户没有输入运算符点击=的情况
       }
+
       state.isResult = true;
       state.isNumInit = true;
     },
