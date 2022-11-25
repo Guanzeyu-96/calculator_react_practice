@@ -29,9 +29,11 @@ export const calculatorSlice = createSlice({
         state.input = "0";
         state.isNumInit = false;
       }
-      // 先将input和输入拼接，转为number后再转回string（实现最前去掉0等操作）
-      const numInput = state.input + action.payload.toString();
-      state.input = parseInt(numInput).toString();
+
+      // 如果input区是0，不支持在0后再添加0
+      if (action.payload === '0' && state.input === '0') return;
+
+      state.input = state.input + action.payload.toString();
     },
     pointClickHandler(state) {
       if (state.isNumInit) {

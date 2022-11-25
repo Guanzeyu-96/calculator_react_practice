@@ -88,4 +88,31 @@ describe("Keyboard input test", () => {
     userEvent.click(keyEqual);
     expect(element).toHaveTextContent("0.5");
   });
+
+  it("should support 0.01 input", function () {
+    render(<App />);
+    const element = screen.getByTestId("screen");
+    const key1 = screen.getByText("1");
+    const key2 = screen.getByText("2");
+    const key0 = screen.getByRole("button", { name: "0" });
+    const keyPlus = screen.getByText("+");
+    const keyPoint = screen.getByText(".");
+    const keyEqual = screen.getByText("=");
+
+    // type '0.01 + 0.02 ='
+
+    userEvent.click(key0);
+    userEvent.click(keyPoint);
+    userEvent.click(key0);
+    userEvent.click(key1);
+    userEvent.click(keyPlus);
+    userEvent.click(key0);
+    userEvent.click(keyPoint);
+    userEvent.click(key0);
+    userEvent.click(key2);
+    userEvent.click(keyEqual);
+
+    // expect 0.03
+    expect(element).toHaveTextContent("0.03");
+  });
 });
