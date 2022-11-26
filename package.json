@@ -12,6 +12,7 @@
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "decimal.js": "^10.4.2",
+    "mathjs": "^11.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
