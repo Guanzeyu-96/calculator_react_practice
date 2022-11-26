@@ -115,4 +115,84 @@ describe("Keyboard input test", () => {
     // expect 0.03
     expect(element).toHaveTextContent("0.03");
   });
+
+  it("should support continues computing", function () {
+    render(<App />);
+    const element = screen.getByTestId("screen");
+    const key1 = screen.getByText("1");
+    const key2 = screen.getByText("2");
+    const key3 = screen.getByText("3");
+    const keyPlus = screen.getByText("+");
+    const keyTimes = screen.getByText("x");
+    const keyEqual = screen.getByText("=");
+    const keyReset = screen.getByText("C");
+
+    // type '1+2+3='
+    userEvent.click(key1);
+    userEvent.click(keyPlus);
+    userEvent.click(key2);
+    userEvent.click(keyPlus);
+    userEvent.click(key3);
+    userEvent.click(keyEqual);
+
+    // expect 7
+    expect(element).toHaveTextContent("6");
+
+    userEvent.click(keyReset);
+
+    // type '1*3+2'
+    userEvent.click(key1);
+    userEvent.click(keyTimes);
+    userEvent.click(key3);
+    userEvent.click(keyPlus);
+    userEvent.click(key2);
+    userEvent.click(keyEqual);
+
+    // expect 9.1
+    expect(element).toHaveTextContent("5");
+  });
+
+  it("should support scientific computing", function () {
+    render(<App />);
+    const element = screen.getByTestId("screen");
+    const key1 = screen.getByText("1");
+    const key2 = screen.getByText("2");
+    const key3 = screen.getByText("3");
+    const key6 = screen.getByText("6");
+    const key0 = screen.getByRole("button", { name: "0" });
+    const keyPlus = screen.getByText("+");
+    const keyTimes = screen.getByText("x");
+    const keyDivide = screen.getByText("÷");
+    const keyEqual = screen.getByText("=");
+    const keyPoint = screen.getByText(".");
+    const keyReset = screen.getByText("C");
+
+    // type '1+2*3='
+    userEvent.click(key1);
+    userEvent.click(keyPlus);
+    userEvent.click(key2);
+    userEvent.click(keyTimes);
+    userEvent.click(key3);
+    userEvent.click(keyEqual);
+
+    // expect 7
+    expect(element).toHaveTextContent("7");
+
+    userEvent.click(keyReset);
+
+    // type '0.1+3*6/2=9.1'
+    userEvent.click(key0);
+    userEvent.click(keyPoint);
+    userEvent.click(key1);
+    userEvent.click(keyPlus);
+    userEvent.click(key3);
+    userEvent.click(keyTimes);
+    userEvent.click(key6);
+    userEvent.click(keyDivide);
+    userEvent.click(key2);
+    userEvent.click(keyEqual);
+
+    // expect 9.1
+    expect(element).toHaveTextContent("9.1");
+  });
 });
