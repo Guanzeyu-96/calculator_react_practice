@@ -30,9 +30,6 @@ export const calculatorSlice = createSlice({
         state.isNumInit = false;
       }
 
-      // 如果input区是0，不支持在0后再添加0
-      if (action.payload === '0' && state.input === '0') return;
-
       state.input = state.input + action.payload.toString();
     },
     pointClickHandler(state) {
@@ -123,4 +120,6 @@ export const calculatorSlice = createSlice({
     },
   },
 });
+
+// @ts-ignore
 export const calculatorActions = calculatorSlice.actions;
