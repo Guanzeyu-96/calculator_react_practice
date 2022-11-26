@@ -4,9 +4,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
 export function eraseZero(screenNumber: string) {
-  // 003450 to 3450
-  // 00.00 to 0.00
-  // 000 to 0
 
   if (screenNumber.includes(".")) {
     for (let i = 0; i < screenNumber.length; i++) {
