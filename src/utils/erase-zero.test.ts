@@ -1,4 +1,4 @@
-import { eraseZero } from "./Screen";
+import { eraseZero } from "./erase-zero";
 
 describe("should erase 0 before a number", () => {
   test("0003404", () => {

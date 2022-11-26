@@ -2,22 +2,7 @@ import React from "react";
 import classes from "./Screen.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-
-export function eraseZero(screenNumber: string) {
-
-  if (screenNumber.includes(".")) {
-    for (let i = 0; i < screenNumber.length; i++) {
-      if (screenNumber[i] === ".") {
-        const beforePoint = screenNumber.slice(0, i);
-        const afterPoint = screenNumber.slice(i);
-
-        return parseInt(beforePoint).toString() + afterPoint;
-      }
-    }
-  } else {
-    return parseInt(screenNumber).toString();
-  }
-}
+import { eraseZero } from "../utils/erase-zero";
 
 export const Screen: React.FC = () => {
   const result = useSelector<RootState>((state) => state.calculator.result);
