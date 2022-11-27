@@ -3,14 +3,7 @@ import { Decimal } from "decimal.js";
 import { scientificComputing } from "../utils/scientific-computing";
 import { eraseZero } from "../utils/erase-zero";
 import { signMapper } from "../constant/signMapper";
-
-interface CalculatorState {
-  input: string; // 实时输入区
-  stage: string | null; // 暂存区
-  result: string | null; // 计算结果保存区
-  isResult: boolean; // 是否为input阶段,仅用来控制显示（input阶段显示input，非input阶段显示result）
-  isNumInit: boolean; // 判断num输入状态。为true时表现为重置；为false时表现为拼接
-}
+import { CalculatorState } from "./types";
 
 const initCalculatorState: CalculatorState = {
   input: "0",
@@ -85,7 +78,7 @@ export const calculatorSlice = createSlice({
       state.isNumInit = true;
     },
     equalClickHandler(state) {
-      // 点击=发生的事：把input区的数据拼接到stage区之后得到expression，计算出结果并放入result区，数字输入状态变为初始化
+      // 点击=：把input区的数据拼接到stage区之后得到expression，计算出结果并放入result区，数字输入状态变为初始化
       // 判断用户没有输入运算符点击=的情况
       if (!state.stage) {
         state.result = state.input;
@@ -111,5 +104,4 @@ export const calculatorSlice = createSlice({
   },
 });
 
-// @ts-ignore
 export const calculatorActions = calculatorSlice.actions;
